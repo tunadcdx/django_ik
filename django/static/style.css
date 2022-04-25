@@ -1,0 +1,45 @@
+hr {
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: 1s;
+    box-shadow: 0px 0px 3px 0px rgb(0 0 0 / 75%);
+}
+
+.profile:hover {
+    transition: 1s;
+    box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 75%);
+}
+
+
+/* workcard */
+.workcard {
+    min-width: 0;
+    position: relative;
+    display: -ms-flexbox;
+    word-wrap: break-word;
+    border-radius: 0.50rem;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.workcard img {
+    width: 100%;
+    max-width: 100px;
+    object-fit: cover;
+}
+
+.d-top {
+    top: 15px;
+}
+
+.acv {
+    z-index: 2;
+    box-shadow: 0px 1px 4px 1px rgb(0 0 0 / 28%);
+}

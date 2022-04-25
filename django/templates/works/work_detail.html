@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="card text-center mt-4">
+        <div class="card-header">
+            {{work.title}}
+        </div>
+        <div class="card-body">
+            <h5 class="">{{work.title}}</h5>
+            <p class="card-text">{{work.desc|safe}}</p>
+            {% if work.isActive and userProfile.id != work.id %}
+            <form action="{% url 'addMyWorks'%}" method="POST">
+                {% csrf_token %}
+                <input type="input" class="d-none" name="workData" value="{{work.id}}">
+                <input type="submit" class="btn btn-primary right" value="Başvuru" />
+            </form>
+            {%elif work.isActive and userProfile.id == work.id %}
+            <a class="btn btn-primary disabled right">Bu İlana Başvuru Yaptınız!</a>
+            {%elif userProfile.id == work.id and work.isActive %}
+            <a class="btn btn-primary disabled right">Bu İlana Başvuru Yaptınız!</a>
+            {%elif userProfile.id != work.id and work.isActive %}
+            <a class="btn btn-primary disabled right">Bu İlana Başvuru Kabul Edilmiyor!</a>
+            {% else %}
+            <a class="btn btn-primary disabled right">Bu İlana Başvuru Kabul Edilmiyor !</a>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            <span class=" pull-left"> İlan Tarihi : {{work.startDate}}</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

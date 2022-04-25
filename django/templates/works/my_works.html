@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <div class="row ml-0 mt-2">
+        <h2>Başvurularım</h2>
+    </div>
+    <hr>
+    <div class="row position-relative">
+        <div class="mt-5 col-lg-3">
+            <ul class="list-group  position-sticky d-top">
+                <li class="list-group-item active">Açık Pozisyonlar</li>
+                <li class="list-group-item ">
+                    <a href="{% url 'home_view'%}">
+                        Tüm Pozisyonlar
+                    </a>
+                </li>
+                {% for cat in cats%}
+                {%if cat.slug == selected_category %}
+                <li class="list-group-item acv">
+                    <a href="{% url 'worksByCategorys' cat.slug %}">
+                        {{cat.catName|title}}
+                    </a>
+                </li>
+                {% else %}
+                <li class="list-group-item">
+                    <a href="{% url 'worksByCategorys' cat.slug %}">
+                        {{cat.catName|title}}
+                    </a>
+                    {% endif %}
+                </li>
+                <!-- <li class="list-group-item disabled">Disabled item</li> -->
+                {%endfor%}
+            </ul>
+        </div>
+        <div class="mt-5 col-lg-9 col-sm-10 mx-auto workcard">
+            {%for work in works%}
+            <div id="{{work.id}}" class="col-md-12 mt-4 d-flex justify-content-lg-start flex-nowrap ">
+                <img src="{{ work.picture.url }}" />
+                <div class="workcard">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{work.title|title}}</h5>
+                    <!-- <p class="card-text">{{work.desc |slice:"0:100"}}</p> -->
+                    <p class="card-text"><small class="text-muted">ilan başvuru tarihi {{work.startDate}} -
+                            {{work.endDate}}</small>
+                    </p>
+                    <a href="{% url 'workers_detail' work.slug %}">İncele</a>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

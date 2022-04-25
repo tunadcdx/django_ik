@@ -1,0 +1,49 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home_view' %}">Ana Sayfa</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="collapsibleNavId">
+            <ul class="navbar-nav mt-4 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> </a>
+                </li>
+            </ul>
+            <div>
+                <form class="form-inline my-2 my-lg-0">
+                    <!-- <input class="form-control mr-sm-2" type="text" placeholder="Hayallerinin İşi">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">ARA</button> -->
+                </form>
+            </div>
+            <div class="d-flex align-items-center mr-2">
+                {% if user.is_authenticated %}
+                <div class="mr-2">
+                    <div class="dropdown show dropleft">
+                        <img class="profile dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" src="image/girl_umbrella_rain_151317_3000x2770_69hJRkG.jpg" alt="">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'profile' %}">Profil</a>
+                            <a class="dropdown-item" href="#">Bildirimler</a>
+                            <a class="dropdown-item" href="{% url 'securty' %}">Güvenlik</a>
+                            <a class="dropdown-item" href="{% url 'myWorks' %}">Başvurularım</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Çıkış Yap</a>
+                        </div>
+                    </div>
+                    <div>{{user.get_full_name|title }}</div>
+                    {% else %}
+                    <div class="">
+                        <a class="btn btn-outline-primary" href="{% url 'register' %}" id="LoginBtn"
+                            aria-expanded="false">Kayıt Ol</a>
+                        <a class="btn btn-outline-primary" href="{% url 'login' %}" id="LoginBtn"
+                            aria-expanded="false">Giriş Yap</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    </nav>
+</header>

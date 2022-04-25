@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript" src="{% static 'nicEdit-latest.js' %}"></script>
+<script type="text/javascript">
+    bkLib.onDomLoaded(function () { nicEditors.allTextAreas() });
+</script>
+<div class="container">
+
+    <div class="row ml-0 mt-2">
+        <h2>
+            {{user.get_full_name|title }}
+        </h2>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12 mt-5 d-flex">
+            <div class="col-4">
+                <img class="img-thumbnail" src="{{getUser.profilePicture }}">
+                <form method="post" action="{% url 'profilePic' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="profilePicture" accept=".jpg, .png">
+                    <br>
+                    <button class="btn btn-dark my-4" type="submit">Güncelle</button>
+                </form>
+            </div>
+            <div class="col-8">
+                <form action="{% url 'profile' %}"enctype="multipart/form-data" method="post">
+                    {% csrf_token %}
+                    <!-- coverLetter -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Ön Yazı</span>
+                        <textarea class="form-control" name="covtter"
+                            aria-label="With textarea">{{getUser.coverLetter}}</textarea>
+                    </div>
+                    <!-- autoBiography -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Öz Geçmiş</span>
+                        <textarea class="form-control" name="autoBiography"
+                            aria-label="With textarea">{{ getUser.autoBiography}}</textarea>
+                    </div>
+                    <!-- autoBiographyFile -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">CV Ekle</span>
+                        <input type="file" name="autoBiographyFile" accept=".pdf">
+                    </div>
+                    <!-- birtDate -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Dogum Tarihi</span>
+                        <input type="datetime-local" name="birtDate" value="{{getUser.birtDate|date:'d/m/Y'}}"
+                            class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <!-- skils -->
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Yetkinlikler</span>
+                        <div class="card col">
+                            {% for sk in skils %}
+                            <div class="form-check">
+                                {% if sk.active %}
+                                <input class="form-check-input" name="skils" checked value="{{sk.id}} " type="checkbox"
+                                    value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{sk.skilName}}
+                                </label>
+                                {% else %}
+                                <input class="form-check-input" name="skils" value="{{sk.id}} " type="checkbox" value=""
+                                    id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{sk.skilName}}
+                                </label>
+                                {%endif%}
+                            </div>
+                            {% endfor%}
+                        </div>
+                    </div>
+                    <button class="btn btn-dark my-4" type="submit">Kayıt Et</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
