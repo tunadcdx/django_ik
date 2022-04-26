@@ -18,7 +18,7 @@ def workers_detail(request, slug):
 
 def workers_update(request, model, exception):
 
-    if not isinstance(exception, SomeExceptionType):
+    if not isinstance(exception):
         return None
     else:
         s1 = Workers.objects.get(model.id)
@@ -29,20 +29,16 @@ def workers_update(request, model, exception):
 
 def worksByCategorys(request, slug):
 
+    f = []
+    for s in Workers.objects.filter(isActive=True):
+        print(s)
+        for d in Workers.objects.get(id=s.id).skil.all():
+            f.append({"workerid": s.id, "skilId": d.id, "skilName": d.skilName})
+
     context = {
         "works": Categorys.objects.get(slug=slug).workers_set.filter(isActive=True),
-        # "works": Workers.objects.filter(isActive=True, category__slug=slug),
         "cats": Categorys.objects.all(),
-        "selected_category": slug
+        "selected_category": slug,
+        "skilsByworker": f
     }
-    works = Categorys.objects.get(slug=slug)
     return render(request, "home.html", context)
-
-
-# def test(request):
-#     categories = Workers.objects.annotate(Count('category_id'))
-#     # return HttpResponse(Categorys.objects.annotate(nblog=Count('category_id')))
-
-#     print(
-#     categories.aggregate(models.Count('id'))['id__count']
-#         )

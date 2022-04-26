@@ -9,6 +9,5 @@ urlpatterns = [
     path("myWorks", views.myWorks_request, name="myWorks"),
     path("register", views.register_request, name="register"),
     path("addMyWorks", views.addMyWorks_request, name="addMyWorks"),
-    path("profilePic", views.profilePic_request, name="profilePic")
-    
+    path("profilePic", views.profilePic_request, name="profilePic")    
 ]

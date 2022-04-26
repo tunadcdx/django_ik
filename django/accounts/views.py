@@ -103,14 +103,14 @@ def profile_request(request):
         autoBiography = request.POST.get("autoBiography")
 
         upload = request.FILES["autoBiographyFile"]
-        print("upload" ,upload)
+        print("upload", upload)
         if userProfile.autoBiographyFile != upload:
-                fss = FileSystemStorage()
-                file = fss.save(upload.name, upload)
-                file_url = fss.url(file)
-                userProfile.autoBiographyFile=file_url
-                userProfile.save()
-            
+            fss = FileSystemStorage()
+            file = fss.save(upload.name, upload)
+            file_url = fss.url(file)
+            userProfile.autoBiographyFile = file_url
+            userProfile.save()
+
         birtDate = request.POST.get("birtDate")
         userProfile.coverLetter = coverLetter,
         userProfile.autoBiography = autoBiography,
@@ -167,15 +167,17 @@ def userSkilsCheck(userid):
 
 
 def addMyWorks_request(request):
-    userProfile = userProfil.objects.get(userField_id=request.user.id)
-    worker = Workers.objects.get(id=request.POST["workData"])
-    userProfile.works.add(worker)
-    context = {
-        "cats": Categorys.objects.all(),
-        "works": userProfile.works.all()
-    }
-    return render(request, 'works\my_works.html', context)
-
+    if request.user.is_authenticated:
+        userProfile = userProfil.objects.get(userField_id=request.user.id)
+        worker = Workers.objects.get(id=request.POST["workData"])
+        userProfile.works.add(worker)
+        context = {
+            "cats": Categorys.objects.all(),
+            "works": userProfile.works.all()
+        }
+        return render(request, 'works\my_works.html', context)
+    else:
+      return  redirect('login')
 
 def myWorks_request(request):
     userProfile = userProfil.objects.get(userField_id=request.user.id)

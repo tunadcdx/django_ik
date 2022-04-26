@@ -121,7 +121,6 @@ class Workers(models.Model):
     isActive = models.BooleanField(default=True, verbose_name='İlan Aktif mi?')
     location = models.CharField(
         max_length=120, choices=CHOICES, verbose_name='İş Lokasyonu')
-    # category = models.ForeignKey(Categorys,on_delete=models.CASCADE, verbose_name='Branş')
     categorys = models.ManyToManyField(Categorys, verbose_name='Branşlar')
     skil = models.ManyToManyField(Skils, verbose_name='Yetkinlikler')
 
